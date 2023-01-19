@@ -3,6 +3,7 @@ package br.com.dea.management.user.domain;
 import jakarta.persistence.*;
 
 @Entity
+@NamedQuery(name = "linkedinQuery", query = "SELECT u FROM User u WHERE linkedin = :linkedin")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
