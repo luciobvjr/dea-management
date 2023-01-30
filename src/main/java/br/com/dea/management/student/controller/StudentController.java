@@ -31,4 +31,10 @@ public class StudentController {
         Page<Student> studentsPaged = this.studentService.findAllStudentsPaginated(page, pageSize);
         return studentsPaged.map(StudentDto::fromStudent);
     }
+
+    @GetMapping("student/searchByID")
+    public StudentDto getStudentById(@RequestParam Long id) {
+        Student student = this.studentService.findById(id);
+        return StudentDto.fromStudent(student);
+    }
 }
