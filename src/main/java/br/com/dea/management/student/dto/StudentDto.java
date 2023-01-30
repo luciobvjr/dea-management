@@ -21,7 +21,7 @@ public class StudentDto {
         studentDto.setLinkedin(student.getUser().getLinkedin());
         studentDto.setUniversity(student.getUniversity());
         studentDto.setGraduation(student.getGraduation());
-        studentDto.setFinish_date(student.getFinish_date());
+        studentDto.setFinish_date(student.getFinishDate());
         return studentDto;
     }
 

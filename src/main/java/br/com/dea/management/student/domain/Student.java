@@ -19,7 +19,7 @@ public class Student {
     private String graduation;
 
     @Column
-    private LocalDate finish_date;
+    private LocalDate finishDate;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -49,12 +49,12 @@ public class Student {
         this.graduation = graduation;
     }
 
-    public LocalDate getFinish_date() {
-        return finish_date;
+    public LocalDate getFinishDate() {
+        return finishDate;
     }
 
-    public void setFinish_date(LocalDate finish_date) {
-        this.finish_date = finish_date;
+    public void setFinishDate(LocalDate finish_date) {
+        this.finishDate = finish_date;
     }
 
     public User getUser() {
