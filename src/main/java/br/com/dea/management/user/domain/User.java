@@ -1,12 +1,14 @@
 package br.com.dea.management.user.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @NamedQuery(name = "linkedinQuery", query = "SELECT u FROM User u WHERE linkedin = :linkedin")
 public class User {
     @Id
