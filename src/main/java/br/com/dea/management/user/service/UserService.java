@@ -4,6 +4,8 @@ import br.com.dea.management.exceptions.NotFoundException;
 import br.com.dea.management.user.domain.User;
 import br.com.dea.management.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
@@ -16,7 +18,11 @@ public class UserService {
     private UserRepository userRepository;
 
     public List<User> findAllUsers() {
-        return  this.userRepository.findAll();
+        return this.userRepository.findAll();
+    }
+
+    public Page<User> findAllUsersPaginated(Integer page, Integer pageSize) {
+        return this.userRepository.findAllPaginated(PageRequest.of(page, pageSize));
     }
 
     public User findUserById(Long id) {
