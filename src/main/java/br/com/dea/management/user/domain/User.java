@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "dea_user")
 @NamedQuery(name = "linkedinQuery", query = "SELECT u FROM User u WHERE linkedin = :linkedin")
 public class User {
     @Id
