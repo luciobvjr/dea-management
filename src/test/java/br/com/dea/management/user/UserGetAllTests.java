@@ -58,6 +58,46 @@ public class UserGetAllTests {
                 .andExpect(jsonPath("$.content[3].linkedin", is("Linkedin 11")));
     }
 
+    @Test
+    void whenRequestingUserListAndPageQueryParamIsInvalid_thenReturnBadRequestError() throws Exception {
+        mockMvc.perform(get("/user/all?page=abc&pageSize=4"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").exists())
+                .andExpect(jsonPath("$.details").isArray())
+                .andExpect(jsonPath("$.details", hasSize(1)));
+    }
+
+    @Test
+    void whenRequestingUserListAndPageQueryParamIsMissing_thenReturnBadRequestError() throws Exception {
+        mockMvc.perform(get("/user/all?pageSize=4"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").exists())
+                .andExpect(jsonPath("$.details").isArray())
+                .andExpect(jsonPath("$.details", hasSize(1)));
+    }
+
+    @Test
+    void whenRequestingUserListAndPageSizeQueryParamIsInvalid_thenReturnBadRequestError() throws Exception {
+        mockMvc.perform(get("/user/all?page=0&pageSize=abc"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").exists())
+                .andExpect(jsonPath("$.details").isArray())
+                .andExpect(jsonPath("$.details", hasSize(1)));
+    }
+
+    @Test
+    void whenRequestingUserListAndPageSizeQueryParamIsMissing_thenReturnBadRequestError() throws Exception {
+        mockMvc.perform(get("/user/all?page=0"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").exists())
+                .andExpect(jsonPath("$.details").isArray())
+                .andExpect(jsonPath("$.details", hasSize(1)));
+    }
+
     private void createFakeUsers(int amount) {
         for (int i =0; i < amount; i++) {
             User user = User.builder()
