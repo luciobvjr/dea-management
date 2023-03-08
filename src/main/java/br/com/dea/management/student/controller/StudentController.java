@@ -114,6 +114,13 @@ public class StudentController {
         log.info(String.format("Student updated successfully : id : %s", student.getId()));
     }
 
+    @Operation(summary = "Delete a Student")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "400", description = "Student id not valid"),
+            @ApiResponse(responseCode = "404", description = "Student not found"),
+            @ApiResponse(responseCode = "500", description = "Error deleting student"),
+    })
     @DeleteMapping("/student/{studentId}")
     public void deleteStudent(@PathVariable Long studentId) {
         log.info(String.format("Deleting Student : id : %s", studentId));
