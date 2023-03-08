@@ -113,4 +113,13 @@ public class StudentController {
 
         log.info(String.format("Student updated successfully : id : %s", student.getId()));
     }
+
+    @DeleteMapping("/student/{studentId}")
+    public void deleteStudent(@PathVariable Long studentId) {
+        log.info(String.format("Deleting Student : id : %s", studentId));
+
+        studentService.deleteStudent(studentId);
+
+        log.info(String.format("Student deleted successfully : id : %s", studentId));
+    }
 }

@@ -67,4 +67,9 @@ public class StudentService {
 
         return this.studentRepository.save(student);
     }
+
+    public void deleteStudent(Long studentId) {
+        Student student = this.findById(studentId);
+        this.studentRepository.delete(student);
+    }
  }
