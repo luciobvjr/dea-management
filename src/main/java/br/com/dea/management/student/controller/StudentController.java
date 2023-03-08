@@ -1,12 +1,14 @@
 package br.com.dea.management.student.controller;
 
 import br.com.dea.management.student.domain.Student;
+import br.com.dea.management.student.dto.CreateStudentRequestDto;
 import br.com.dea.management.student.dto.StudentDto;
 import br.com.dea.management.student.service.StudentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -78,5 +80,20 @@ public class StudentController {
         log.info(String.format("Student loaded successfully : Student : %s", student));
 
         return student;
+    }
+
+    @Operation(summary = "Create a new student.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "400", description = "Payload not valid"),
+            @ApiResponse(responseCode = "500", description = "Error creating student"),
+    })
+    @PostMapping("/student")
+    public void createStudent(@Valid @RequestBody CreateStudentRequestDto createStudentRequestDto) {
+        log.info(String.format("Creating Student : Payload : %s", createStudentRequestDto));
+
+        Student student = studentService.createStudent(createStudentRequestDto);
+
+        log.info(String.format("Student created successfully : id : %s", student.getId()));
     }
 }
