@@ -3,6 +3,7 @@ package br.com.dea.management.student.controller;
 import br.com.dea.management.student.domain.Student;
 import br.com.dea.management.student.dto.CreateStudentRequestDto;
 import br.com.dea.management.student.dto.StudentDto;
+import br.com.dea.management.student.dto.UpdateStudentRequestDto;
 import br.com.dea.management.student.service.StudentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -95,5 +96,21 @@ public class StudentController {
         Student student = studentService.createStudent(createStudentRequestDto);
 
         log.info(String.format("Student created successfully : id : %s", student.getId()));
+    }
+
+    @Operation(summary = "Update a student.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "400", description = "Payload not valid"),
+            @ApiResponse(responseCode = "404", description = "Student not found"),
+            @ApiResponse(responseCode = "500", description = "Error updating student"),
+    })
+    @PutMapping("/student/{studentId}")
+    public void updateStudent(@PathVariable Long studentId, @Valid @RequestBody UpdateStudentRequestDto updateStudentRequestDto) {
+        log.info(String.format("Updating Student : Payload : %s", updateStudentRequestDto));
+
+        Student student = studentService.updateStudent(studentId, updateStudentRequestDto);
+
+        log.info(String.format("Student updated successfully : id : %s", student.getId()));
     }
 }
