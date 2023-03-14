@@ -2,6 +2,8 @@ package br.com.dea.management.student.service;
 
 import br.com.dea.management.exceptions.NotFoundException;
 import br.com.dea.management.student.domain.Student;
+import br.com.dea.management.student.dto.CreateStudentRequestDto;
+import br.com.dea.management.student.dto.UpdateStudentRequestDto;
 import br.com.dea.management.student.repository.StudentRepository;
 import br.com.dea.management.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +31,45 @@ public class StudentService {
     public Student findById(Long id) {
         Optional<Student> student = this.studentRepository.findById(id);
         return student.orElseThrow(() -> new NotFoundException(Student.class, id));
+    }
+
+    public Student createStudent(CreateStudentRequestDto createStudentRequestDto) {
+        User user = User.builder()
+                .name(createStudentRequestDto.getName())
+                .email(createStudentRequestDto.getEmail())
+                .linkedin(createStudentRequestDto.getLinkedin())
+                .password(createStudentRequestDto.getPassword())
+                .build();
+
+        Student student = Student.builder()
+                .user(user)
+                .graduation(createStudentRequestDto.getGraduation())
+                .finishDate(createStudentRequestDto.getFinishDate())
+                .university(createStudentRequestDto.getUniversity())
+                .build();
+
+        return this.studentRepository.save(student);
+    }
+
+    public Student updateStudent(Long studentId, UpdateStudentRequestDto updateStudentRequestDto) {
+        Student student = this.findById(studentId);
+        User user = student.getUser();
+
+        user.setName(updateStudentRequestDto.getName());
+        user.setLinkedin(updateStudentRequestDto.getLinkedin());
+        user.setEmail(updateStudentRequestDto.getEmail());
+        user.setPassword(updateStudentRequestDto.getPassword());
+
+        student.setUser(user);
+        student.setGraduation(updateStudentRequestDto.getGraduation());
+        student.setUniversity(updateStudentRequestDto.getUniversity());
+        student.setFinishDate(updateStudentRequestDto.getFinishDate());
+
+        return this.studentRepository.save(student);
+    }
+
+    public void deleteStudent(Long studentId) {
+        Student student = this.findById(studentId);
+        this.studentRepository.delete(student);
     }
  }
