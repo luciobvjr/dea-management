@@ -6,8 +6,7 @@ import br.com.dea.management.employee.dto.UpdateEmployeeRequestDto;
 import br.com.dea.management.employee.repository.EmployeeRepository;
 import br.com.dea.management.exceptions.NotFoundException;
 import br.com.dea.management.position.domain.Position;
-import br.com.dea.management.student.domain.Student;
-import br.com.dea.management.student.dto.UpdateStudentRequestDto;
+import br.com.dea.management.position.repository.PositionRepository;
 import br.com.dea.management.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +20,9 @@ import java.util.List;
 public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private PositionRepository positionRepository;
 
     public List<Employee> findAllEmployee() {
         return this.employeeRepository.findAll();
@@ -46,6 +48,8 @@ public class EmployeeService {
                 .description(createEmployeeRequestDto.getDescription())
                 .seniority(createEmployeeRequestDto.getSeniority())
                 .build();
+
+        this.positionRepository.save(position);
 
         Employee employee = Employee.builder()
                 .employeeType(createEmployeeRequestDto.getEmployeeType())

@@ -5,7 +5,6 @@ import br.com.dea.management.position.domain.Position;
 import br.com.dea.management.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.validator.constraints.ISBN;
 
 @Entity
 @Getter
@@ -23,7 +22,7 @@ public class Employee {
     private EmployeeType employeeType;
 
     @ManyToOne
-    @JoinColumn(name = "position_id")
+    @JoinColumn(name = "position_id", referencedColumnName = "id")
     private Position position;
 
     @OneToOne(cascade = CascadeType.ALL)
