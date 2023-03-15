@@ -5,7 +5,6 @@ import br.com.dea.management.employee.dto.CreateEmployeeRequestDto;
 import br.com.dea.management.employee.repository.EmployeeRepository;
 import br.com.dea.management.exceptions.NotFoundException;
 import br.com.dea.management.position.domain.Position;
-import br.com.dea.management.student.domain.Student;
 import br.com.dea.management.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
