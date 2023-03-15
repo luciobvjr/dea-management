@@ -22,7 +22,7 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     private EmployeeType employeeType;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "position_id")
     private Position position;
 
