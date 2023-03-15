@@ -1,12 +1,16 @@
 package br.com.dea.management.employee.controller;
 
 import br.com.dea.management.employee.domain.Employee;
+import br.com.dea.management.employee.dto.CreateEmployeeRequestDto;
 import br.com.dea.management.employee.dto.EmployeeDto;
 import br.com.dea.management.employee.service.EmployeeService;
+import br.com.dea.management.student.domain.Student;
+import br.com.dea.management.student.dto.CreateStudentRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -54,6 +58,21 @@ public class EmployeeController {
         log.info(String.format("Employee loaded successfully : Employee : %s", employee));
 
         return employee;
+    }
+
+    @Operation(summary = "Create a new employee.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "400", description = "Payload not valid"),
+            @ApiResponse(responseCode = "500", description = "Error creating student"),
+    })
+    @PostMapping("/employee")
+    public void createEmployee(@Valid @RequestBody CreateEmployeeRequestDto createEmployeeRequestDto) {
+        log.info(String.format("Creating employee : Payload : %s", createEmployeeRequestDto));
+
+        Employee employee = employeeService.createEmployee(createEmployeeRequestDto);
+
+        log.info(String.format("Employee created successfully : id : %s", employee.getId()));
     }
 
     @Operation(summary = "Delete a Employee")
