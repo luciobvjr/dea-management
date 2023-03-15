@@ -2,9 +2,12 @@ package br.com.dea.management.employee.service;
 
 import br.com.dea.management.employee.domain.Employee;
 import br.com.dea.management.employee.dto.CreateEmployeeRequestDto;
+import br.com.dea.management.employee.dto.UpdateEmployeeRequestDto;
 import br.com.dea.management.employee.repository.EmployeeRepository;
 import br.com.dea.management.exceptions.NotFoundException;
 import br.com.dea.management.position.domain.Position;
+import br.com.dea.management.student.domain.Student;
+import br.com.dea.management.student.dto.UpdateStudentRequestDto;
 import br.com.dea.management.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -50,6 +53,25 @@ public class EmployeeService {
                 .user(user)
                 .build();
 
+        return this.employeeRepository.save(employee);
+    }
+
+    public Employee updateEmployee(Long employeeId, UpdateEmployeeRequestDto updateEmployeeRequestDto) {
+        Employee employee = this.findEmployeeById(employeeId);
+        Position position = employee.getPosition();
+        User user = employee.getUser();
+
+        position.setDescription(updateEmployeeRequestDto.getDescription());
+        position.setSeniority(updateEmployeeRequestDto.getSeniority());
+
+        user.setName(updateEmployeeRequestDto.getName());
+        user.setEmail(updateEmployeeRequestDto.getEmail());
+        user.setLinkedin(updateEmployeeRequestDto.getLinkedin());
+        user.setPassword(updateEmployeeRequestDto.getPassword());
+
+        employee.setEmployeeType(updateEmployeeRequestDto.getEmployeeType());
+        employee.setUser(user);
+        employee.setPosition(position);
         return this.employeeRepository.save(employee);
     }
 

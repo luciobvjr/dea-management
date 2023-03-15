@@ -3,9 +3,11 @@ package br.com.dea.management.employee.controller;
 import br.com.dea.management.employee.domain.Employee;
 import br.com.dea.management.employee.dto.CreateEmployeeRequestDto;
 import br.com.dea.management.employee.dto.EmployeeDto;
+import br.com.dea.management.employee.dto.UpdateEmployeeRequestDto;
 import br.com.dea.management.employee.service.EmployeeService;
 import br.com.dea.management.student.domain.Student;
 import br.com.dea.management.student.dto.CreateStudentRequestDto;
+import br.com.dea.management.student.dto.UpdateStudentRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -73,6 +75,22 @@ public class EmployeeController {
         Employee employee = employeeService.createEmployee(createEmployeeRequestDto);
 
         log.info(String.format("Employee created successfully : id : %s", employee.getId()));
+    }
+
+    @Operation(summary = "Update a employee.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "400", description = "Payload not valid"),
+            @ApiResponse(responseCode = "404", description = "Student not found"),
+            @ApiResponse(responseCode = "500", description = "Error updating student"),
+    })
+    @PutMapping("/employee/{employeeId}")
+    public void updateStudent(@PathVariable Long employeeId, @Valid @RequestBody UpdateEmployeeRequestDto updateEmployeeRequestDto) {
+        log.info(String.format("Updating Employee : Payload : %s", updateEmployeeRequestDto));
+
+        Employee employee = employeeService.updateEmployee(employeeId, updateEmployeeRequestDto);
+
+        log.info(String.format("Employee updated successfully : id : %s", employee.getId()));
     }
 
     @Operation(summary = "Delete a Employee")
