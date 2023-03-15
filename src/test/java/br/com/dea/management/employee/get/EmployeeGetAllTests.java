@@ -51,6 +51,7 @@ public class EmployeeGetAllTests {
     @Test
     void whenRequestingEmployeeList_thenReturnListOfEmployeePaginatedSuccessfully() throws Exception {
         this.employeeRepository.deleteAll();
+        this.positionRepository.deleteAll();
 
         this.employeeTestUtils.createFakeEmployees(100);
 

@@ -25,11 +25,12 @@ public class EmployeeTestUtils {
         this.positionRepository.save(position);
 
         for (int i = 0; i < amount; i++) {
-            User u = new User();
-            u.setEmail("email" + i + "@email.com");
-            u.setName("name " + i);
-            u.setLinkedin("linkedin " + i);
-            u.setPassword("password " + i);
+            User u = User.builder()
+                    .name("name " + i)
+                    .email("email" + i + "@email.com")
+                    .linkedin("linkedin " + i)
+                    .password("password " + i)
+                    .build();
 
             Employee employee = Employee.builder()
                     .employeeType(EmployeeType.DEVELOPER)
