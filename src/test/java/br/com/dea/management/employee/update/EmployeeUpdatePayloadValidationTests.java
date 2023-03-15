@@ -73,7 +73,7 @@ class EmployeeUpdatePayloadValidationTests {
                 "\"seniority\": \"seniority\"," +
                 "\"name\": \"name\"," +
                 "\"email\": \"email@email.com\"," +
-                "\"password\": \"password\"," +
+                "\"password\": \"pass\"," +
                 "\"linkedin\": \"linkedin\"" +
                 "}";
         mockMvc.perform(put("/employee/0")
