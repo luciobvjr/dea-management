@@ -76,6 +76,7 @@ public class EmployeeService {
     }
 
     public void deleteEmployee(Long id) {
-        this.employeeRepository.deleteById(id);
+        Employee employee = this.findEmployeeById(id);
+        this.employeeRepository.delete(employee);
     }
 }
