@@ -1,6 +1,7 @@
 package br.com.dea.management.employee.update;
 
 import br.com.dea.management.employee.EmployeeTestUtils;
+import br.com.dea.management.employee.domain.Employee;
 import br.com.dea.management.employee.repository.EmployeeRepository;
 import br.com.dea.management.position.repository.PositionRepository;
 import org.junit.jupiter.api.Test;
@@ -63,20 +64,19 @@ class EmployeeUpdatePayloadValidationTests {
     @Test
     void whenPayloadHasTooShortPassword_thenReturn400AndTheErrors() throws Exception {
         this.employeeRepository.deleteAll();
-        this.positionRepository.deleteAll();
+        this.employeeTestUtils.createFakeEmployees(1);
 
-        this.employeeTestUtils.createFakeEmployees(2);
+        Employee employee = this.employeeRepository.findAll().get(0);
 
         String payload = "{" +
                 "\"employeeType\": \"INSTRUCTOR\"," +
-                "\"description\": \"description\"," +
-                "\"seniority\": \"seniority\"," +
+                "\"position\": \"1\"," +
                 "\"name\": \"name\"," +
                 "\"email\": \"email@email.com\"," +
                 "\"password\": \"pass\"," +
                 "\"linkedin\": \"linkedin\"" +
                 "}";
-        mockMvc.perform(put("/employee/0")
+        mockMvc.perform(put("/employee/" + employee.getId())
                         .contentType(APPLICATION_JSON_UTF8).content(payload))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -91,14 +91,13 @@ class EmployeeUpdatePayloadValidationTests {
     void whenEditingAEmployeeThatDoesNotExists_thenReturn404() throws Exception {
         this.employeeRepository.deleteAll();
 
-        String payload = "{" +
+        String payload ="{" +
+                "\"employeeType\": \"INSTRUCTOR\"," +
+                "\"position\": \"1\"," +
                 "\"name\": \"name\"," +
                 "\"email\": \"email@email.com\"," +
-                "\"linkedin\": \"linkedin\"," +
-                "\"university\": \"university\"," +
-                "\"graduation\": \"graduation\"," +
                 "\"password\": \"password\"," +
-                "\"finishDate\": \"2023-02-27\"" +
+                "\"linkedin\": \"linkedin\"" +
                 "}";
         mockMvc.perform(put("/employee/1")
                         .contentType(APPLICATION_JSON_UTF8).content(payload))

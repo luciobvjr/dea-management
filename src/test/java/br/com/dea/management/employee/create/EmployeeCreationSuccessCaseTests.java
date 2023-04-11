@@ -1,7 +1,9 @@
 package br.com.dea.management.employee.create;
 
+import br.com.dea.management.employee.EmployeeTestUtils;
 import br.com.dea.management.employee.domain.Employee;
 import br.com.dea.management.employee.repository.EmployeeRepository;
+import br.com.dea.management.position.domain.Position;
 import br.com.dea.management.position.repository.PositionRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,18 +36,20 @@ class EmployeeCreationSuccessCaseTests {
     @Autowired
     PositionRepository positionRepository;
 
+    @Autowired
+    private EmployeeTestUtils employeeTestUtils;
+
     public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(), StandardCharsets.UTF_8);
 
     @Test
     void whenRequestingEmployeeCreationWithAValidPayload_thenCreateAEmployeeSuccessfully() throws Exception {
         this.employeeRepository.deleteAll();
-        this.positionRepository.deleteAll();
+        Position position = this.employeeTestUtils.createFakePosition("Dev", "Pleno");
 
         String payload = "{" +
                 "\"employeeType\": \"INSTRUCTOR\"," +
-                "\"description\": \"description\"," +
-                "\"seniority\": \"seniority\"," +
+                "\"position\": " + position.getId() + "," +
                 "\"name\": \"name\"," +
                 "\"email\": \"email@email.com\"," +
                 "\"password\": \"password\"," +
@@ -58,8 +62,7 @@ class EmployeeCreationSuccessCaseTests {
         Employee employee = this.employeeRepository.findAll().get(0);
 
         assertThat(employee.getEmployeeType()).isEqualTo(INSTRUCTOR);
-        assertThat(employee.getPosition().getDescription()).isEqualTo("description");
-        assertThat(employee.getPosition().getSeniority()).isEqualTo("seniority");
+        assertThat(employee.getPosition().getId()).isEqualTo(position.getId());
         assertThat(employee.getUser().getName()).isEqualTo("name");
         assertThat(employee.getUser().getEmail()).isEqualTo("email@email.com");
         assertThat(employee.getUser().getPassword()).isEqualTo("password");

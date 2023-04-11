@@ -1,24 +1,14 @@
 package br.com.dea.management;
 
-import br.com.dea.management.student.domain.Student;
-import br.com.dea.management.student.repository.StudentRepository;
-import br.com.dea.management.user.domain.User;
-import br.com.dea.management.user.repository.UserRepository;
-import br.com.dea.management.user.service.UserService;
+import br.com.dea.management.position.domain.Position;
+import br.com.dea.management.position.repository.PositionRepository;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.servers.Server;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 
 @SpringBootApplication
 @OpenAPIDefinition(info = @Info(title = "Dea Management", version = "1.0", description = "Dea Management API Description"),
@@ -33,19 +23,15 @@ public class DeamanagementApplication implements CommandLineRunner {
 	}
 
 	@Autowired
-	private UserService userService;
+	PositionRepository positionRepository;
 
-	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	private StudentRepository studentRepository;
-
-	@PersistenceContext
-	private EntityManager entityManager;
+	Position position = Position.builder()
+			.seniority("Dev iOS senior")
+			.description("Senior iOS developer with XCode")
+			.build();
 
 	@Override
 	public void run(String... args) {
-
+		this.positionRepository.save(position);
 	}
 }

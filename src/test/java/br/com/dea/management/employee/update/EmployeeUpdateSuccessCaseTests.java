@@ -3,6 +3,7 @@ package br.com.dea.management.employee.update;
 import br.com.dea.management.employee.EmployeeTestUtils;
 import br.com.dea.management.employee.domain.Employee;
 import br.com.dea.management.employee.repository.EmployeeRepository;
+import br.com.dea.management.position.domain.Position;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import static br.com.dea.management.employee.EmployeeType.INSTRUCTOR;
@@ -43,13 +43,13 @@ class EmployeeUpdateSuccessCaseTests {
     void whenRequestingEmployeeUpdateWithAValidPayload_thenUpdateAEmployeeSuccessfully() throws Exception {
         this.employeeRepository.deleteAll();
         this.employeeTestUtils.createFakeEmployees(1);
+        Position position = this.employeeTestUtils.createFakePosition("Designer", "Junior");
 
         Employee employeeBase = this.employeeRepository.findAll().get(0);
 
         String payload = "{" +
                 "\"employeeType\": \"INSTRUCTOR\"," +
-                "\"description\": \"updated description\"," +
-                "\"seniority\": \"updated seniority\"," +
+                "\"position\": " + position.getId() + "," +
                 "\"name\": \"updated name\"," +
                 "\"email\": \"updatedemail@email.com\"," +
                 "\"password\": \"updatedpassword\"," +
@@ -62,8 +62,7 @@ class EmployeeUpdateSuccessCaseTests {
         Employee employee = this.employeeRepository.findAll().get(0);
 
         assertThat(employee.getEmployeeType()).isEqualTo(INSTRUCTOR);
-        assertThat(employee.getPosition().getDescription()).isEqualTo("updated description");
-        assertThat(employee.getPosition().getSeniority()).isEqualTo("updated seniority");
+        assertThat(employee.getPosition().getId()).isEqualTo(position.getId());
         assertThat(employee.getUser().getName()).isEqualTo("updated name");
         assertThat(employee.getUser().getEmail()).isEqualTo("updatedemail@email.com");
         assertThat(employee.getUser().getPassword()).isEqualTo("updatedpassword");
