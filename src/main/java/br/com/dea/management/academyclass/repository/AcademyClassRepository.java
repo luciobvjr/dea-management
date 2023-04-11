@@ -1,4 +1,4 @@
-package br.com.dea.management.academyclass;
+package br.com.dea.management.academyclass.repository;
 
 import br.com.dea.management.academyclass.domain.AcademyClass;
 import org.springframework.data.domain.Page;
