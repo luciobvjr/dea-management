@@ -24,10 +24,6 @@ public class EmployeeService {
     @Autowired
     private PositionRepository positionRepository;
 
-    public List<Employee> findAllEmployee() {
-        return this.employeeRepository.findAll();
-    }
-
     public Page<Employee> findAllEmployeePaginated(Integer page, Integer pageSize) {
         return this.employeeRepository.findAllPaginated(PageRequest.of(page, pageSize, Sort.by("user.name").ascending()));
     }
@@ -37,19 +33,15 @@ public class EmployeeService {
     }
 
     public Employee createEmployee(CreateEmployeeRequestDto createEmployeeRequestDto) {
+        Position position = this.positionRepository.findById(createEmployeeRequestDto.getPosition())
+                .orElseThrow(() -> new NotFoundException(Position.class, createEmployeeRequestDto.getPosition()));
+
         User user = User.builder()
                 .name(createEmployeeRequestDto.getName())
                 .email(createEmployeeRequestDto.getEmail())
                 .linkedin(createEmployeeRequestDto.getLinkedin())
                 .password(createEmployeeRequestDto.getPassword())
                 .build();
-
-        Position position = Position.builder()
-                .description(createEmployeeRequestDto.getDescription())
-                .seniority(createEmployeeRequestDto.getSeniority())
-                .build();
-
-        this.positionRepository.save(position);
 
         Employee employee = Employee.builder()
                 .employeeType(createEmployeeRequestDto.getEmployeeType())
@@ -61,13 +53,12 @@ public class EmployeeService {
     }
 
     public Employee updateEmployee(Long employeeId, UpdateEmployeeRequestDto updateEmployeeRequestDto) {
+        Position position = this.positionRepository.findById(updateEmployeeRequestDto.getPosition())
+                .orElseThrow(() -> new NotFoundException(Position.class, updateEmployeeRequestDto.getPosition()));
+
         Employee employee = this.findEmployeeById(employeeId);
-        Position position = employee.getPosition();
+
         User user = employee.getUser();
-
-        position.setDescription(updateEmployeeRequestDto.getDescription());
-        position.setSeniority(updateEmployeeRequestDto.getSeniority());
-
         user.setName(updateEmployeeRequestDto.getName());
         user.setEmail(updateEmployeeRequestDto.getEmail());
         user.setLinkedin(updateEmployeeRequestDto.getLinkedin());

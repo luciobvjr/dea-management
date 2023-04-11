@@ -41,4 +41,14 @@ public class EmployeeTestUtils {
             this.employeeRepository.save(employee);
         }
     }
+
+    public Position createFakePosition(String description, String seniority) {
+
+        Position position = Position.builder()
+                .description(description)
+                .seniority(seniority)
+                .build();
+
+        return this.positionRepository.save(position);
+    }
 }

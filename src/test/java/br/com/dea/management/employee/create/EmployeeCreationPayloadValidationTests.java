@@ -51,8 +51,7 @@ class EmployeeCreationPayloadValidationTests {
     void whenPayloadHasNotValidEmail_thenReturn400AndTheErrors() throws Exception {
         String payload = "{" +
                 "\"employeeType\": \"INSTRUCTOR\"," +
-                "\"description\": \"description\"," +
-                "\"seniority\": \"seniority\"," +
+                "\"position\": \"1\"," +
                 "\"name\": \"name\"," +
                 "\"email\": \"email\"," +
                 "\"password\": \"password\"," +
@@ -73,8 +72,7 @@ class EmployeeCreationPayloadValidationTests {
     void whenPayloadHasTooShortPassword_thenReturn400AndTheErrors() throws Exception {
         String payload = "{" +
                 "\"employeeType\": \"INSTRUCTOR\"," +
-                "\"description\": \"description\"," +
-                "\"seniority\": \"seniority\"," +
+                "\"position\": \"1\"," +
                 "\"name\": \"name\"," +
                 "\"email\": \"email@email.com\"," +
                 "\"password\": \"pass\"," +

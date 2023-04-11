@@ -15,12 +15,8 @@ import lombok.*;
 public class CreateEmployeeRequestDto {
     private EmployeeType employeeType;
 
-    // Position
-    private String description;
+    private Long position;
 
-    private String seniority;
-
-    // User
     @NotNull(message = "Name could not be null")
     private String name;
 
