@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Component
 public class AcademyClassTestUtils {
     @Autowired
-    public AcademyClassRepository academyClassRepository;
+    private AcademyClassRepository academyClassRepository;
     @Autowired
     private EmployeeTestUtils employeeTestUtils;
     @Autowired
