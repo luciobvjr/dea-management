@@ -40,7 +40,7 @@ public class AcademyClassCreationPayloadValidationTests {
                 .andExpect(jsonPath("$.details[*].errorMessage", hasItem("Start Date could not be null")))
                 .andExpect(jsonPath("$.details[*].field", hasItem("endDate")))
                 .andExpect(jsonPath("$.details[*].errorMessage", hasItem("End Date could not be null")))
-                .andExpect(jsonPath("$.details[*].field", hasItem("classType")))
+                .andExpect(jsonPath("$.details[*].field", hasItem("academyClassType")))
                 .andExpect(jsonPath("$.details[*].errorMessage", hasItem("Academy Class Type could not be null")))
                 .andExpect(jsonPath("$.details[*].field", hasItem("instructorId")))
                 .andExpect(jsonPath("$.details[*].errorMessage", hasItem("Instructor Id could not be null")));

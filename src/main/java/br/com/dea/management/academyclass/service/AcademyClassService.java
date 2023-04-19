@@ -2,6 +2,7 @@ package br.com.dea.management.academyclass.service;
 
 import br.com.dea.management.academyclass.domain.AcademyClass;
 import br.com.dea.management.academyclass.dto.CreateAcademyClassRequestDto;
+import br.com.dea.management.academyclass.dto.UpdateAcademyClassRequestDto;
 import br.com.dea.management.academyclass.repository.AcademyClassRepository;
 import br.com.dea.management.employee.domain.Employee;
 import br.com.dea.management.employee.repository.EmployeeRepository;
@@ -38,6 +39,20 @@ public class AcademyClassService {
                 .academyClassType(createAcademyClassRequestDto.getAcademyClassType())
                 .instructor(instructor)
                 .build();
+
+        return this.academyClassRepository.save(academyClass);
+    }
+
+    public AcademyClass updateAcademyClass(Long academyClassId,UpdateAcademyClassRequestDto updateAcademyClassRequestDto) {
+        Employee instructor = this.employeeRepository.findById(updateAcademyClassRequestDto.getInstructorId())
+                .orElseThrow(() -> new NotFoundException(Employee.class, updateAcademyClassRequestDto.getInstructorId()));
+
+        AcademyClass academyClass = this.findAcademyClassById(academyClassId);
+
+        academyClass.setStartDate(updateAcademyClassRequestDto.getStartDate());
+        academyClass.setEndDate(updateAcademyClassRequestDto.getEndDate());
+        academyClass.setAcademyClassType(updateAcademyClassRequestDto.getAcademyClassType());
+        academyClass.setInstructor(instructor);
 
         return this.academyClassRepository.save(academyClass);
     }
