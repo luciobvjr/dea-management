@@ -38,7 +38,7 @@ public class AcademyClassController {
         return academyClasses.map(AcademyClassDto::fromAcademyClass);
     }
 
-    @Operation(summary = "Load the list an academyClass by id.")
+    @Operation(summary = "Load academyClass by id.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation"),
             @ApiResponse(responseCode = "400", description = "AcademyClass id not valid"),
