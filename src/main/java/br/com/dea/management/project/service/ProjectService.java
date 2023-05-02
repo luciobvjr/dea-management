@@ -38,7 +38,7 @@ public class ProjectService {
 
         Project project = Project.builder()
                 .startDate(createProjectRequestDto.getStartDate())
-                .endDate(createProjectRequestDto.getEndData())
+                .endDate(createProjectRequestDto.getEndDate())
                 .client(createProjectRequestDto.getClient())
                 .productOwner(productOwner)
                 .scrumMaster(scrumMaster)
