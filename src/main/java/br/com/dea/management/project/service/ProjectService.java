@@ -58,7 +58,7 @@ public class ProjectService {
         Project project = this.findProjectById(projectId);
 
         project.setStartDate(updateProjectRequestDto.getStartDate());
-        project.setEndDate(updateProjectRequestDto.getEndData());
+        project.setEndDate(updateProjectRequestDto.getEndDate());
         project.setClient(updateProjectRequestDto.getClient());
         project.setProductOwner(productOwner);
         project.setScrumMaster(scrumMaster);

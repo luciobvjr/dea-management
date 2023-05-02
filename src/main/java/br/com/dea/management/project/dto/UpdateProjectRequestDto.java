@@ -15,7 +15,7 @@ public class UpdateProjectRequestDto {
     private LocalDate startDate;
 
     @NotNull(message = "End Date could not be null")
-    private LocalDate endData;
+    private LocalDate endDate;
 
     @NotNull(message = "Client could not be null")
     private String client;

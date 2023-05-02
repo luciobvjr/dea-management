@@ -73,34 +73,4 @@ public class AcademyClassUpdateSuccessCaseTests {
         assertThat(academyClass.getAcademyClassType()).isEqualTo(AcademyClassType.DESIGN);
         assertThat(academyClass.getInstructor().getId()).isEqualTo(instructor.getId());
     }
-
-    @Test
-    void whenRequestingEmployeeUpdateWithAValidPayload_thenUpdateAEmployeeSuccessfully() throws Exception {
-        this.employeeRepository.deleteAll();
-        this.employeeTestUtils.createFakeEmployees(1);
-        Position position = this.employeeTestUtils.createFakePosition("Designer", "Junior");
-
-        Employee employeeBase = this.employeeRepository.findAll().get(0);
-
-        String payload = "{" +
-                "\"employeeType\": \"INSTRUCTOR\"," +
-                "\"position\": " + position.getId() + "," +
-                "\"name\": \"updated name\"," +
-                "\"email\": \"updatedemail@email.com\"," +
-                "\"password\": \"updatedpassword\"," +
-                "\"linkedin\": \"updated linkedin\"" +
-                "}";
-        mockMvc.perform(put("/employee/" + employeeBase.getId())
-                        .contentType(APPLICATION_JSON_UTF8).content(payload))
-                .andExpect(status().isOk());
-
-        Employee employee = this.employeeRepository.findAll().get(0);
-
-        assertThat(employee.getEmployeeType()).isEqualTo(INSTRUCTOR);
-        assertThat(employee.getPosition().getId()).isEqualTo(position.getId());
-        assertThat(employee.getUser().getName()).isEqualTo("updated name");
-        assertThat(employee.getUser().getEmail()).isEqualTo("updatedemail@email.com");
-        assertThat(employee.getUser().getPassword()).isEqualTo("updatedpassword");
-        assertThat(employee.getUser().getLinkedin()).isEqualTo("updated linkedin");
-    }
 }
