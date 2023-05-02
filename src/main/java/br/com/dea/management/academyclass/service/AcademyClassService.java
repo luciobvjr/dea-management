@@ -56,4 +56,9 @@ public class AcademyClassService {
 
         return this.academyClassRepository.save(academyClass);
     }
+
+    public void deleteAcademyClass(Long id) {
+        AcademyClass academyClass = this.findAcademyClassById(id);
+        this.academyClassRepository.delete(academyClass);
+    }
 }

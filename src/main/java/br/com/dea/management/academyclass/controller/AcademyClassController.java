@@ -77,11 +77,27 @@ public class AcademyClassController {
             @ApiResponse(responseCode = "500", description = "Error updating academy class")
     })
     @PutMapping("academy-class/{academyClassId}")
-    public void updateAcademyClass(@PathVariable Long academyClassId,@Valid @RequestBody UpdateAcademyClassRequestDto updateAcademyClassRequestDto) {
+    public void updateAcademyClass(@PathVariable Long academyClassId, @Valid @RequestBody UpdateAcademyClassRequestDto updateAcademyClassRequestDto) {
         log.info(String.format("Updating academy class : Payload : %s", updateAcademyClassRequestDto));
 
         AcademyClass academyClass = academyClassService.updateAcademyClass(academyClassId, updateAcademyClassRequestDto);
 
         log.info(String.format("Academy class updated successfully : id : %s", academyClass.getId()));
+    }
+
+    @Operation(summary = "Delete a academy class")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "400", description = "Payload not valid"),
+            @ApiResponse(responseCode = "404", description = "Academy class not found"),
+            @ApiResponse(responseCode = "500", description = "Error deleting academy class"),
+    })
+    @DeleteMapping("/academy-class/{academyClassId}")
+    public void deleteAcademyClass(@PathVariable Long academyClassId) {
+        log.info(String.format("Removing academy class : Id : %s", academyClassId));
+
+        academyClassService.deleteAcademyClass(academyClassId);
+
+        log.info(String.format("Academy class removed successfully : id : %s", academyClassId));
     }
 }
