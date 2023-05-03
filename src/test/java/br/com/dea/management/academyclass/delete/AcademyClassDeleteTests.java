@@ -1,5 +1,9 @@
-package br.com.dea.management.project.delete;
+package br.com.dea.management.academyclass.delete;
 
+import br.com.dea.management.academyclass.AcademyClassTestUtils;
+import br.com.dea.management.academyclass.AcademyClassType;
+import br.com.dea.management.academyclass.domain.AcademyClass;
+import br.com.dea.management.academyclass.repository.AcademyClassRepository;
 import br.com.dea.management.employee.EmployeeTestUtils;
 import br.com.dea.management.employee.repository.EmployeeRepository;
 import br.com.dea.management.project.ProjectTestUtils;
@@ -29,18 +33,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class ProjectDeleteTests {
+public class AcademyClassDeleteTests {
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private ProjectRepository projectRepository;
+    private AcademyClassRepository academyClassRepository;
 
     @Autowired
     private EmployeeRepository employeeRepository;
 
     @Autowired
-    private ProjectTestUtils projectTestUtils;
+    private AcademyClassTestUtils academyClassTestUtils;
 
     @Autowired
     private EmployeeTestUtils employeeTestUtils;
@@ -49,29 +53,29 @@ public class ProjectDeleteTests {
             MediaType.APPLICATION_JSON.getSubtype(), StandardCharsets.UTF_8);
 
     @Test
-    void whenRequestingToRemoveProject_thenRemoveAProjectSuccessfully() throws Exception {
-        this.projectRepository.deleteAll();
-        this.employeeRepository.deleteAll();
+    void whenRequestingToRemoveAcademyClass_thenRemoveAcademyClassSuccessfully() throws Exception {
+        this.academyClassRepository.deleteAll();
 
         LocalDate startDate = LocalDate.of(2021, 3,1);
         LocalDate endDate = LocalDate.of(2022, 12, 4);
-        Project project = this.projectTestUtils.createFakeProject(startDate, endDate);
+        academyClassTestUtils.createFakeAcademyClass(AcademyClassType.DEVELOPER, startDate, endDate);
 
-        mockMvc.perform(delete("/project/" + project.getId())
+        AcademyClass academyClass = academyClassRepository.findAll().get(0);
+
+        mockMvc.perform(delete("/academy-class/" + academyClass.getId())
                         .contentType(APPLICATION_JSON_UTF8))
                         .andExpect(status().isOk());
 
-        List<Project> projects = this.projectRepository.findAll();
+        List<AcademyClass> academyClasses = this.academyClassRepository.findAll();
 
-        assertThat(projects.size()).isEqualTo(0);
+        assertThat(academyClasses.size()).isEqualTo(0);
     }
 
     @Test
-    void whenRemovingAProjectThatDoesNotExists_thenReturn404() throws Exception {
-        this.projectRepository.deleteAll();
-        this.employeeRepository.deleteAll();
+    void whenRemovingAcademyClassThatDoesNotExists_thenReturn404() throws Exception {
+        this.academyClassRepository.deleteAll();
 
-        mockMvc.perform(delete("/project/0")
+        mockMvc.perform(delete("/academy-class/0")
                         .contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
