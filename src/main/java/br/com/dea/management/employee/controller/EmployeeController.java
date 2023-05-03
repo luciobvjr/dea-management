@@ -66,7 +66,7 @@ public class EmployeeController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation"),
             @ApiResponse(responseCode = "400", description = "Payload not valid"),
-            @ApiResponse(responseCode = "500", description = "Error creating student"),
+            @ApiResponse(responseCode = "500", description = "Error creating employee"),
     })
     @PostMapping("/employee")
     public void createEmployee(@Valid @RequestBody CreateEmployeeRequestDto createEmployeeRequestDto) {
@@ -77,12 +77,12 @@ public class EmployeeController {
         log.info(String.format("Employee created successfully : id : %s", employee.getId()));
     }
 
-    @Operation(summary = "Update a employee.")
+    @Operation(summary = "Update an employee.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation"),
             @ApiResponse(responseCode = "400", description = "Payload not valid"),
-            @ApiResponse(responseCode = "404", description = "Student not found"),
-            @ApiResponse(responseCode = "500", description = "Error updating student"),
+            @ApiResponse(responseCode = "404", description = "Employee not found"),
+            @ApiResponse(responseCode = "500", description = "Error updating employee"),
     })
     @PutMapping("/employee/{employeeId}")
     public void updateStudent(@PathVariable Long employeeId, @Valid @RequestBody UpdateEmployeeRequestDto updateEmployeeRequestDto) {
